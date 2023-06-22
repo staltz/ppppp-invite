@@ -75,6 +75,7 @@ test('create()', async (t) => {
     })
 
   const uri = await p(stack.invite.create)({
+    type: "follow",
     _hubMsAddr: 'net:example.com:8008~shse:HUB_PUBKEY',
     id: 'MOCK_ID',
   })
