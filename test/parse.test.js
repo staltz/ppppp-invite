@@ -21,7 +21,7 @@ test('parse() good cases', (t) => {
   assert.deepEqual(commands, [
     {
       type: 'join',
-      address: 'net:HOST:PORT~shse:PUBKEY.TOKEN',
+      address: 'net:HOST:PORT~shse:PUBKEY:TOKEN',
     },
     {
       type: 'follow',
