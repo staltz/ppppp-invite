@@ -14,7 +14,7 @@ test('parse() error cases', (t) => {
   })
 })
 
-test('parse() good cases', (t) => {
+test('parse() good friend invite', (t) => {
   const commands = plugin.parse(
     'ppppp://invite/join/HOST/PORT/PUBKEY/TOKEN/follow/ALICE/promise.follow/identity.ALICE/ALICE_TOKEN'
   )
@@ -34,3 +34,25 @@ test('parse() good cases', (t) => {
     },
   ])
 })
+
+test('parse() good myself invite', (t) => {
+  const commands = plugin.parse(
+    'ppppp://invite/join/HOST/PORT/PUBKEY/TOKEN/tunnel-connect/HUB_PUBKEY/OLD_PUBKEY/promise.identity-add/identity.IDENTITY_ID/OLD_TOKEN'
+  )
+  assert.deepEqual(commands, [
+    {
+      type: 'join',
+      address: 'net:HOST:PORT~shse:PUBKEY:TOKEN',
+    },
+    {
+      type: 'tunnel-connect',
+      address: 'tunnel:HUB_PUBKEY:OLD_PUBKEY~shse:OLD_PUBKEY',
+    },
+    {
+      type: 'promise.identity-add',
+      issuerID: 'IDENTITY_ID',
+      token: 'OLD_TOKEN',
+    },
+  ])
+})
+
