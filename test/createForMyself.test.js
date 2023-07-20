@@ -7,8 +7,8 @@ const rimraf = require('rimraf')
 const Keypair = require('ppppp-keypair')
 const caps = require('ppppp-caps')
 
-test('create()', async (t) => {
-  const path = Path.join(os.tmpdir(), 'ppppp-promise-create-0')
+test('createForMyself()', async (t) => {
+  const path = Path.join(os.tmpdir(), 'ppppp-promise-createForMyself-0')
   rimraf.sync(path)
   const keypair = Keypair.generate('ed25519', 'alice')
 
@@ -49,23 +49,21 @@ test('create()', async (t) => {
       return {
         create(opts, cb) {
           createPromiseCalled = true
-          assert.deepEqual(opts, { type: 'follow' })
+          assert.deepEqual(opts, { type: 'identity-add', identity: 'MOCK_ID' })
           cb(null, 'MOCK_PROMISE')
         },
       }
     },
   }
 
-  const stack = require('secret-stack/lib/api')([], {})
-    .use(require('secret-stack/lib/core'))
-    .use(require('secret-stack/lib/plugins/net'))
+  const local = require('secret-stack/bare')({ caps })
+    .use(require('secret-stack/plugins/net'))
     .use(require('secret-handshake-ext/secret-stack'))
     .use(mockConn)
     .use(mockPromise)
     .use(require('../lib'))
     .call(null, {
       path,
-      caps,
       keypair,
       connections: {
         outgoing: {
@@ -74,22 +72,21 @@ test('create()', async (t) => {
       },
     })
 
-  const { uri, url } = await p(stack.invite.create)({
-    type: 'follow',
+  const { uri, url } = await p(local.invite.createForMyself)({
     _hubMsAddr: 'net:example.com:8008~shse:HUB_PUBKEY',
     id: 'MOCK_ID',
   })
   assert.equal(
     uri,
-    `ppppp://invite/join/example.com/8008/HUB_PUBKEY/MOCK_TOKEN/follow/MOCK_ID/promise.follow/identity.MOCK_ID/MOCK_PROMISE`
+    `ppppp://invite/join/example.com/8008/HUB_PUBKEY/MOCK_TOKEN/tunnel-connect/HUB_PUBKEY/${local.shse.pubkey}/promise.identity-add/identity.MOCK_ID/MOCK_PROMISE`
   )
   assert.equal(
     url,
-    `http://example.com/invite#ppppp%3A%2F%2Finvite%2Fjoin%2Fexample.com%2F8008%2FHUB_PUBKEY%2FMOCK_TOKEN%2Ffollow%2FMOCK_ID%2Fpromise.follow%2Fidentity.MOCK_ID%2FMOCK_PROMISE`
+    `http://example.com/invite#ppppp%3A%2F%2Finvite%2Fjoin%2Fexample.com%2F8008%2FHUB_PUBKEY%2FMOCK_TOKEN%2Ftunnel-connect%2FHUB_PUBKEY%2F${local.shse.pubkey}%2Fpromise.identity-add%2Fidentity.MOCK_ID%2FMOCK_PROMISE`
   )
 
   assert.ok(connectCalled)
   assert.ok(createTokenCalled)
   assert.ok(createPromiseCalled)
-  await p(stack.close)()
+  await p(local.close)()
 })

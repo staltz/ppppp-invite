@@ -29,8 +29,7 @@ test('parse() good cases', (t) => {
     },
     {
       type: 'promise.follow',
-      issuerType: 'identity',
-      issuer: 'ALICE',
+      issuerID: 'ALICE',
       token: 'ALICE_TOKEN',
     },
   ])
