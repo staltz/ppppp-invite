@@ -55,4 +55,3 @@ test('parse() good myself invite', (t) => {
     },
   ])
 })
-

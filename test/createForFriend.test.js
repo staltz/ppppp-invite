@@ -56,7 +56,7 @@ test('createForFriend()', async (t) => {
     },
   }
 
-  const local = require('secret-stack/bare')({caps})
+  const local = require('secret-stack/bare')({ caps })
     .use(require('secret-stack/plugins/net'))
     .use(require('secret-handshake-ext/secret-stack'))
     .use(mockConn)
