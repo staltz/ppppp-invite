@@ -49,7 +49,7 @@ test('createForMyself()', async (t) => {
       return {
         create(opts, cb) {
           createPromiseCalled = true
-          assert.deepEqual(opts, { type: 'identity-add', identity: 'MOCK_ID' })
+          assert.deepEqual(opts, { type: 'account-add', account: 'MOCK_ID' })
           cb(null, 'MOCK_PROMISE')
         },
       }
@@ -78,11 +78,11 @@ test('createForMyself()', async (t) => {
   })
   assert.equal(
     uri,
-    `ppppp://invite/join/example.com/8008/HUB_PUBKEY/MOCK_TOKEN/tunnel-connect/HUB_PUBKEY/${local.shse.pubkey}/promise.identity-add/identity.MOCK_ID/MOCK_PROMISE`
+    `ppppp://invite/join/example.com/8008/HUB_PUBKEY/MOCK_TOKEN/tunnel-connect/HUB_PUBKEY/${local.shse.pubkey}/promise.account-add/account.MOCK_ID/MOCK_PROMISE`
   )
   assert.equal(
     url,
-    `http://example.com/invite#ppppp%3A%2F%2Finvite%2Fjoin%2Fexample.com%2F8008%2FHUB_PUBKEY%2FMOCK_TOKEN%2Ftunnel-connect%2FHUB_PUBKEY%2F${local.shse.pubkey}%2Fpromise.identity-add%2Fidentity.MOCK_ID%2FMOCK_PROMISE`
+    `http://example.com/invite#ppppp%3A%2F%2Finvite%2Fjoin%2Fexample.com%2F8008%2FHUB_PUBKEY%2FMOCK_TOKEN%2Ftunnel-connect%2FHUB_PUBKEY%2F${local.shse.pubkey}%2Fpromise.account-add%2Faccount.MOCK_ID%2FMOCK_PROMISE`
   )
 
   assert.ok(connectCalled)

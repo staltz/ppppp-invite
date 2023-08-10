@@ -16,7 +16,7 @@ test('parse() error cases', (t) => {
 
 test('parse() good friend invite', (t) => {
   const commands = plugin.parse(
-    'ppppp://invite/join/HOST/PORT/PUBKEY/TOKEN/follow/ALICE/promise.follow/identity.ALICE/ALICE_TOKEN'
+    'ppppp://invite/join/HOST/PORT/PUBKEY/TOKEN/follow/ALICE/promise.follow/account.ALICE/ALICE_TOKEN'
   )
   assert.deepEqual(commands, [
     {
@@ -37,7 +37,7 @@ test('parse() good friend invite', (t) => {
 
 test('parse() good myself invite', (t) => {
   const commands = plugin.parse(
-    'ppppp://invite/join/HOST/PORT/PUBKEY/TOKEN/tunnel-connect/HUB_PUBKEY/OLD_PUBKEY/promise.identity-add/identity.IDENTITY_ID/OLD_TOKEN'
+    'ppppp://invite/join/HOST/PORT/PUBKEY/TOKEN/tunnel-connect/HUB_PUBKEY/OLD_PUBKEY/promise.account-add/account.ACCOUNT_ID/OLD_TOKEN'
   )
   assert.deepEqual(commands, [
     {
@@ -49,8 +49,8 @@ test('parse() good myself invite', (t) => {
       address: 'tunnel:HUB_PUBKEY:OLD_PUBKEY~shse:OLD_PUBKEY',
     },
     {
-      type: 'promise.identity-add',
-      issuerID: 'IDENTITY_ID',
+      type: 'promise.account-add',
+      issuerID: 'ACCOUNT_ID',
       token: 'OLD_TOKEN',
     },
   ])

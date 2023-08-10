@@ -78,11 +78,11 @@ test('createForFriend()', async (t) => {
   })
   assert.equal(
     uri,
-    `ppppp://invite/join/example.com/8008/HUB_PUBKEY/MOCK_TOKEN/follow/MOCK_ID/promise.follow/identity.MOCK_ID/MOCK_PROMISE`
+    `ppppp://invite/join/example.com/8008/HUB_PUBKEY/MOCK_TOKEN/follow/MOCK_ID/promise.follow/account.MOCK_ID/MOCK_PROMISE`
   )
   assert.equal(
     url,
-    `http://example.com/invite#ppppp%3A%2F%2Finvite%2Fjoin%2Fexample.com%2F8008%2FHUB_PUBKEY%2FMOCK_TOKEN%2Ffollow%2FMOCK_ID%2Fpromise.follow%2Fidentity.MOCK_ID%2FMOCK_PROMISE`
+    `http://example.com/invite#ppppp%3A%2F%2Finvite%2Fjoin%2Fexample.com%2F8008%2FHUB_PUBKEY%2FMOCK_TOKEN%2Ffollow%2FMOCK_ID%2Fpromise.follow%2Faccount.MOCK_ID%2FMOCK_PROMISE`
   )
 
   assert.ok(connectCalled)
