@@ -56,18 +56,21 @@ test('createForMyself()', async (t) => {
     },
   }
 
-  const local = require('secret-stack/bare')({ caps })
+  const local = require('secret-stack/bare')()
     .use(require('secret-stack/plugins/net'))
     .use(require('secret-handshake-ext/secret-stack'))
     .use(mockConn)
     .use(mockPromise)
     .use(require('../lib'))
     .call(null, {
-      path,
-      keypair,
-      connections: {
-        outgoing: {
-          net: [{ transform: 'shse' }],
+      shse: { caps },
+      global: {
+        path,
+        keypair,
+        connections: {
+          outgoing: {
+            net: [{ transform: 'shse' }],
+          },
         },
       },
     })
