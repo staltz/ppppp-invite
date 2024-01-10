@@ -4,24 +4,24 @@ const plugin = require('../lib/index')
 
 test('parse() error cases', (t) => {
   assert.throws(() => {
-    plugin.parse('ssb://invite/join/HUB_ADDR/HUB_PUBKEY/HUB_TOKEN')
+    plugin.parse('ssb://invite/join/ip4/127.0.0.1/tcp/HUB_PUBKEY/HUB_TOKEN')
   })
   assert.throws(() => {
     plugin.parse('ppppp:invite')
   })
   assert.throws(() => {
-    plugin.parse('ppppp:invite/join/HUB_ADDR')
+    plugin.parse('ppppp:invite/join/ip4/127.0.0.1')
   })
 })
 
 test('parse() good friend invite', (t) => {
   const commands = plugin.parse(
-    'ppppp://invite/join/HOST/PORT/PUBKEY/TOKEN/follow/ALICE/promise.follow/account.ALICE/ALICE_TOKEN'
+    'ppppp://invite/join/dns/example.com/tcp/8080/shse/PUBKEY.TOKEN/follow/ALICE/promise.follow/account.ALICE/ALICE_TOKEN'
   )
   assert.deepEqual(commands, [
     {
       type: 'join',
-      address: 'net:HOST:PORT~shse:PUBKEY:TOKEN',
+      address: 'net:example.com:8080~shse:PUBKEY:TOKEN',
     },
     {
       type: 'follow',
@@ -37,12 +37,12 @@ test('parse() good friend invite', (t) => {
 
 test('parse() good myself invite', (t) => {
   const commands = plugin.parse(
-    'ppppp://invite/join/HOST/PORT/PUBKEY/TOKEN/tunnel-connect/HUB_PUBKEY/OLD_PUBKEY/promise.account-add/account.ACCOUNT_ID/OLD_TOKEN'
+    'ppppp://invite/join/dns/example.com/tcp/8080/shse/PUBKEY.TOKEN/tunnel-connect/HUB_PUBKEY/OLD_PUBKEY/promise.account-add/account.ACCOUNT_ID/OLD_TOKEN'
   )
   assert.deepEqual(commands, [
     {
       type: 'join',
-      address: 'net:HOST:PORT~shse:PUBKEY:TOKEN',
+      address: 'net:example.com:8080~shse:PUBKEY:TOKEN',
     },
     {
       type: 'tunnel-connect',
@@ -52,6 +52,18 @@ test('parse() good myself invite', (t) => {
       type: 'promise.account-add',
       issuerID: 'ACCOUNT_ID',
       token: 'OLD_TOKEN',
+    },
+  ])
+})
+
+test('parse() good tokenless join invite', (t) => {
+  const commands = plugin.parse(
+    'ppppp://invite/join/dns/example.com/tcp/8080/shse/PUBKEY'
+  )
+  assert.deepEqual(commands, [
+    {
+      type: 'join',
+      address: 'net:example.com:8080~shse:PUBKEY',
     },
   ])
 })

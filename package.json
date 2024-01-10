@@ -23,6 +23,7 @@
     "node": ">=16"
   },
   "dependencies": {
+    "ip": "~1.1.8",
     "multiserver-address": "~1.0.1",
     "promisify-tuple": "1.2.0"
   },

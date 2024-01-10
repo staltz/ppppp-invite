@@ -5,13 +5,19 @@
 **Invite URL:**
 
 ```
-ppppp://invite/join/HOST/PORT/PUBKEY/TOKEN/follow/ALICE_ID/promise.follow/account.ALICE_ID/ALICE_TOKEN
+ppppp://invite/join/HOSTFORMAT/HOST/TRANSPORT/PORT/TRANSFORM/CREDENTIALS/follow/ALICE_ID/promise.follow/account.ALICE_ID/ALICE_TOKEN
 ```
 
 made of 3 "commands":
 
-- `join/HOST/PORT/PUBKEY/TOKEN`
+- `join/HOSTFORMAT/HOST/TRANSPORT/PORT/TRANSFORM/CREDENTIALS`
   - Meaning "join" this hub at this address, claiming this token to become a member
+  - `HOSTFORMAT` is `ip4` or `ip6` or `dns`
+  - `HOST` is the host address
+  - `TRANSPORT` is `tcp` (or others to be supported in the future)
+  - `PORT` is the port number
+  - `TRANSFORM` is `shse` (or others to be supported in the future)
+  - `CREDENTIALS` is `PUBKEY.TOKEN` where PUBKEY is the hub's public key and TOKEN is the hub membership token to claim
 - `follow/ALICE_ID`
   - Meaning that you should follow Alice
 - `promise.follow/account.ALICE_ID/ALICE_TOKEN`
@@ -64,13 +70,19 @@ end
 **Invite URL:**
 
 ```
-ppppp://invite/join/HOST/PORT/PUBKEY/TOKEN/tunnel-connect/HUB_PUBKEY/OLD_PUBKEY/promise.account-add/peer.PUBKEY/OLD_TOKEN/promise.account-internal-encryption-key/peer.PUBKEY/OLD_TOKEN
+ppppp://invite/join/HOSTFORMAT/HOST/TRANSPORT/PORT/TRANSFORM/CREDENTIALS/tunnel-connect/HUB_PUBKEY/OLD_PUBKEY/promise.account-add/peer.PUBKEY/OLD_TOKEN/promise.account-internal-encryption-key/peer.PUBKEY/OLD_TOKEN
 ```
 
 made of 3 "commands":
 
-- `join/HOST/PORT/PUBKEY/TOKEN`
-  - Meaning "join" this hub at this address, claiming this token
+- `join/HOSTFORMAT/HOST/TRANSPORT/PORT/TRANSFORM/CREDENTIALS`
+  - Meaning "join" this hub at this address, claiming this token to become a member
+  - `HOSTFORMAT` is `ip4` or `ip6` or `dns`
+  - `HOST` is the host address
+  - `TRANSPORT` is `tcp` (or others to be supported in the future)
+  - `PORT` is the port number
+  - `TRANSFORM` is `shse` (or others to be supported in the future)
+  - `CREDENTIALS` is `PUBKEY.TOKEN` where PUBKEY is the hub's public key and TOKEN is the hub membership token to claim
 - `tunnel-connect/HUB_PUBKEY/OLD_PUBKEY`
   - Meaning that you should connect to the old device via a tunnel in the hub
 - `promise.account-add/peer.PUBKEY/OLD_TOKEN` TODO implement with peer.PUBKEY
