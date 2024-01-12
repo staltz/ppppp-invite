@@ -16,8 +16,8 @@ test('createForFriend()', async (t) => {
   let createTokenCalled = false
   let createPromiseCalled = false
 
-  const mockConn = {
-    name: 'conn',
+  const mockNet = {
+    name: 'net',
     manifest: {
       connect: 'async',
     },
@@ -59,7 +59,7 @@ test('createForFriend()', async (t) => {
   const local = require('secret-stack/bare')()
     .use(require('secret-stack/plugins/net'))
     .use(require('secret-handshake-ext/secret-stack'))
-    .use(mockConn)
+    .use(mockNet)
     .use(mockPromise)
     .use(require('../lib'))
     .call(null, {
