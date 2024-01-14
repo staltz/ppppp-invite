@@ -49,7 +49,7 @@ test('createForFriend()', async (t) => {
       return {
         create(opts, cb) {
           createPromiseCalled = true
-          assert.deepEqual(opts, { type: 'follow' })
+          assert.deepEqual(opts, { type: 'follow', account: 'MOCK_ID' })
           cb(null, 'MOCK_PROMISE')
         },
       }
