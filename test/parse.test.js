@@ -21,7 +21,7 @@ test('parse() good friend invite', (t) => {
   assert.deepEqual(commands, [
     {
       type: 'join',
-      address: 'net:example.com:8080~shse:PUBKEY:TOKEN',
+      multiaddr: '/dns/example.com/tcp/8080/shse/PUBKEY.TOKEN',
     },
     {
       type: 'follow',
@@ -42,11 +42,11 @@ test('parse() good myself invite', (t) => {
   assert.deepEqual(commands, [
     {
       type: 'join',
-      address: 'net:example.com:8080~shse:PUBKEY:TOKEN',
+      multiaddr: '/dns/example.com/tcp/8080/shse/PUBKEY.TOKEN',
     },
     {
       type: 'tunnel-connect',
-      address: 'tunnel:HUB_PUBKEY:OLD_PUBKEY~shse:OLD_PUBKEY',
+      multiaddr: '/tunnel/HUB_PUBKEY.OLD_PUBKEY/shse/OLD_PUBKEY',
     },
     {
       type: 'promise.account-add',
@@ -63,7 +63,7 @@ test('parse() good tokenless join invite', (t) => {
   assert.deepEqual(commands, [
     {
       type: 'join',
-      address: 'net:example.com:8080~shse:PUBKEY',
+      multiaddr: '/dns/example.com/tcp/8080/shse/PUBKEY',
     },
   ])
 })

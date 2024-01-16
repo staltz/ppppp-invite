@@ -24,7 +24,6 @@
   },
   "dependencies": {
     "ip": "~1.1.8",
-    "multiserver-address": "~1.0.1",
     "promisify-tuple": "1.2.0"
   },
   "devDependencies": {
@@ -32,7 +31,9 @@
     "c8": "^7.11.0",
     "husky": "^4.3.0",
     "ppppp-caps": "github:staltz/ppppp-caps",
+    "ppppp-hub-client": "github:staltz/ppppp-hub-client",
     "ppppp-keypair": "github:staltz/ppppp-keypair",
+    "ppppp-net": "github:staltz/ppppp-net",
     "ppppp-promise": "github:staltz/ppppp-promise",
     "prettier": "^2.6.2",
     "pretty-quick": "^3.1.3",

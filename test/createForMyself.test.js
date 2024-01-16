@@ -25,7 +25,7 @@ test('createForMyself()', async (t) => {
       return {
         connect(address, cb) {
           connectCalled = true
-          assert.equal(address, 'net:example.com:8008~shse:HUB_PUBKEY')
+          assert.equal(address, '/dns/example.com/tcp/8008/shse/HUB_PUBKEY')
           const mockRpc = {
             hub: {
               createToken(cb) {
@@ -56,11 +56,17 @@ test('createForMyself()', async (t) => {
     },
   }
 
+  const mockHubClient = {
+    name: 'hubClient',
+    init() {},
+  }
+
   const local = require('secret-stack/bare')()
     .use(require('secret-stack/plugins/net'))
     .use(require('secret-handshake-ext/secret-stack'))
     .use(mockNet)
     .use(mockPromise)
+    .use(mockHubClient)
     .use(require('../lib'))
     .call(null, {
       shse: { caps },
@@ -76,7 +82,7 @@ test('createForMyself()', async (t) => {
     })
 
   const { uri, url } = await p(local.invite.createForMyself)({
-    _hubMsAddr: 'net:example.com:8008~shse:HUB_PUBKEY',
+    _hubMultiaddr: '/dns/example.com/tcp/8008/shse/HUB_PUBKEY',
     id: 'MOCK_ID',
   })
   assert.equal(
@@ -85,7 +91,7 @@ test('createForMyself()', async (t) => {
   )
   assert.equal(
     url,
-    `http://example.com/invite#ppppp%3A%2F%2Finvite%2Fjoin%2Fdns%2Fexample.com%2Ftcp%2F8008%2Fshse%2FHUB_PUBKEY.MOCK_TOKEN%2Ftunnel-connect%2FHUB_PUBKEY%2F${local.shse.pubkey}%2Fpromise.account-add%2Faccount.MOCK_ID%2FMOCK_PROMISE`
+    `https://example.com/invite#ppppp%3A%2F%2Finvite%2Fjoin%2Fdns%2Fexample.com%2Ftcp%2F8008%2Fshse%2FHUB_PUBKEY.MOCK_TOKEN%2Ftunnel-connect%2FHUB_PUBKEY%2F${local.shse.pubkey}%2Fpromise.account-add%2Faccount.MOCK_ID%2FMOCK_PROMISE`
   )
 
   assert.ok(connectCalled)
