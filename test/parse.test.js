@@ -16,7 +16,7 @@ test('parse() error cases', (t) => {
 
 test('parse() good friend invite', (t) => {
   const commands = plugin.parse(
-    'ppppp://invite/join/dns/example.com/tcp/8080/shse/PUBKEY.TOKEN/follow/ALICE/promise.follow/ALICE_TOKEN/pubkey.ALICE'
+    'ppppp://invite/join/dns/example.com/tcp/8080/shse/PUBKEY.TOKEN/follow/ALICE/promise.follow/pubkey.ALICE/ALICE_TOKEN'
   )
   assert.deepEqual(commands, [
     {
@@ -37,7 +37,7 @@ test('parse() good friend invite', (t) => {
 
 test('parse() good myself invite', (t) => {
   const commands = plugin.parse(
-    'ppppp://invite/join/dns/example.com/tcp/8080/shse/PUBKEY.TOKEN/tunnel-connect/HUB_PUBKEY/OLD_PUBKEY/promise.account-add/OLD_TOKEN/pubkey.PUBKEY'
+    'ppppp://invite/join/dns/example.com/tcp/8080/shse/PUBKEY.TOKEN/tunnel-connect/HUB_PUBKEY/OLD_PUBKEY/promise.account-add/pubkey.PUBKEY/OLD_TOKEN'
   )
   assert.deepEqual(commands, [
     {
